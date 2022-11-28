@@ -2,6 +2,7 @@ package com.binotify.services;
 
 import javax.xml.ws.Endpoint;
 
+import com.binotify.services.impl.APIKeyServiceImpl;
 import com.binotify.services.impl.ChocolateServiceImpl;
 import com.binotify.services.impl.SubscriptionServiceImpl;
 
@@ -16,6 +17,7 @@ public class App {
         Endpoint.publish(String.format("http://%s:%s/webservice/chocolate", host, port), new ChocolateServiceImpl());
         Endpoint.publish(String.format("http://%s:%s/webservice/subscription", host, port),
                 new SubscriptionServiceImpl());
+        Endpoint.publish(String.format("http://%s:%s/webservice/generatekey", host, port), new APIKeyServiceImpl());
 
     }
 }

@@ -16,7 +16,7 @@ public class Logger {
         }
     }
 
-    public static int createLog(String description, String IP, String endpoint) throws SQLException {
+    public int createLog(String description, String IP, String endpoint) throws SQLException {
         String query = "INSERT INTO Logging(description, IP, endpoint) VALUES ('%s', '%s', '%s')";
         String sql = String.format(query, description, IP, endpoint);
         Statement statement = db.createStatement();
