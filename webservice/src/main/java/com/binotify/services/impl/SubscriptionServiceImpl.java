@@ -86,7 +86,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
-                String rawQuery = "INSERT INTO Subscription(creator_id, subscriber_id, status) VALUES (%d, %d, 'ACCEPTED')";
+                String rawQuery = "UPDATE Subscription SET status = 'ACCEPTED' WHERE creator_id = %d AND subscriber_id = %d;";
                 String sql = String.format(rawQuery, creatorId, subscriberId);
                 statement.executeUpdate(sql);
                 // Terus lakuin callback
@@ -111,7 +111,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
-                String rawQuery = "INSERT INTO Subscription(creator_id, subscriber_id, status) VALUES (%d, %d, 'REJECTED')";
+                String rawQuery = "UPDATE Subscription SET status = 'REJECTED' WHERE creator_id = %d AND subscriber_id = %d;";
                 String sql = String.format(rawQuery, creatorId, subscriberId);
                 statement.executeUpdate(sql);
                 // Terus lakuin callback
@@ -140,8 +140,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
-                String rawQuery = "SELECT * FROM Subscription WHERE creator_id = %d AND subscriberId = %d;";
-                String sql = String.format(rawQuery);
+                String rawQuery = "SELECT * FROM Subscription WHERE creator_id = %d AND subscriber_id = %d;";
+                String sql = String.format(rawQuery, creatorId, subscriberId);
                 // Terus lakuin callback
                 return SubscriptionModelDao.getSubscriptionReq(statement.executeQuery(sql));
             } else {
