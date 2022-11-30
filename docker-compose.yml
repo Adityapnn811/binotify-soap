@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0.0
+    container_name: mysql-soap
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_TCP_PORT=3306
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    restart: always
+
+  binotify-soap:
+    container_name: binotify-soap2
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - DB_URL=jdbc:mysql://mysql-soap/binotifysoap
+      - DB_Username=root
+      - DB_Password=root
+      - HOST=localhost
+      - PORT=4040
+    ports:
+      - 4040:4040
+    depends_on:
+      - mysql

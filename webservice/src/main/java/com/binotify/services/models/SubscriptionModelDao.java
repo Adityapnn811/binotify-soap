@@ -13,6 +13,8 @@ public class SubscriptionModelDao {
                         res.getString("status"));
                 subscriptionReq.add(subs);
             }
+        } catch (NullPointerException e) {
+            System.out.println("Result is empty");
         } catch (Exception e) {
             e.printStackTrace();
         }
