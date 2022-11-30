@@ -13,6 +13,11 @@ import com.binotify.services.utils.APIKey;
 import com.binotify.services.utils.DBHandler;
 import com.binotify.services.utils.Logger;
 
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.List;
 
@@ -64,7 +69,6 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 String rawQuery = "INSERT INTO Subscription(creator_id, subscriber_id) VALUES (%d, %d)";
                 String sql = String.format(rawQuery, creatorId, subscriberId);
                 statement.executeUpdate(sql);
-                // Terus lakuin callback
                 return true;
             } else {
                 return false;
@@ -90,7 +94,30 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 String sql = String.format(rawQuery, creatorId, subscriberId);
                 statement.executeUpdate(sql);
                 // Terus lakuin callback
-                return true;
+                byte[] body = String.format("{ \"creatorId\": %d, \"subscriberId\": %d , \"status\": \"%s\" }",
+                        creatorId, subscriberId, "ACCEPTED").getBytes(StandardCharsets.UTF_8);
+                URL url = new URL("http://localhost:5000/callback/approveSubs");
+                URLConnection con = url.openConnection();
+                HttpURLConnection http = (HttpURLConnection) con;
+                try {
+                    http.setRequestMethod("PUT");
+                    http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                    http.setRequestProperty("Accept", "application/json");
+                    http.setDoOutput(true);
+
+                    http.connect();
+
+                    // Tulis body
+                    try (OutputStream os = con.getOutputStream()) {
+                        os.write(body);
+                    }
+
+                    return http.getResponseCode() / 100 == 2;
+                } catch (Exception e) {
+                    return false;
+                } finally {
+                    http.disconnect();
+                }
             } else {
                 return false;
             }
@@ -115,7 +142,31 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 String sql = String.format(rawQuery, creatorId, subscriberId);
                 statement.executeUpdate(sql);
                 // Terus lakuin callback
-                return true;
+                // Terus lakuin callback
+                byte[] body = String.format("{ \"creatorId\": %d, \"subscriberId\": %d , \"status\": \"%s\" }",
+                        creatorId, subscriberId, "REJECTED").getBytes(StandardCharsets.UTF_8);
+                URL url = new URL("http://localhost:5000/callback/rejectSubs");
+                URLConnection con = url.openConnection();
+                HttpURLConnection http = (HttpURLConnection) con;
+                try {
+                    http.setRequestMethod("PUT");
+                    http.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+                    http.setRequestProperty("Accept", "application/json");
+                    http.setDoOutput(true);
+
+                    http.connect();
+
+                    // Tulis body
+                    try (OutputStream os = con.getOutputStream()) {
+                        os.write(body);
+                    }
+
+                    return http.getResponseCode() / 100 == 2;
+                } catch (Exception e) {
+                    return false;
+                } finally {
+                    http.disconnect();
+                }
             } else {
                 return false;
             }
