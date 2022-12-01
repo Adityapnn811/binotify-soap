@@ -36,7 +36,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 // System.out.println(res.getString("api_key"));
                 // Get IP address dll buat log dulu
                 logger.createLog("Mengambil data subscription yang masih pending", this.getReqIP(),
-                        this.getReqEndpoint());
+                        this.getReqEndpoint() + "#getSubscriptionReq");
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
@@ -62,7 +62,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                 // System.out.println(res.getString("api_key"));
                 // Get IP address dll buat log dulu
                 logger.createLog("Mencoba membuat subscription request baru dengan creatorId " + creatorId
-                        + " dan subscriberId " + subscriberId, this.getReqIP(), this.getReqEndpoint());
+                        + " dan subscriberId " + subscriberId, this.getReqIP(),
+                        this.getReqEndpoint() + "#createSubscriptionReq");
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
@@ -86,7 +87,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             if (Boolean.TRUE.equals(APIKey.checkKey(apiKey))) {
                 // Get IP address dll buat log dulu
                 logger.createLog("Menerima subscription request dengan creatorId " + creatorId
-                        + " dan subscriberId " + subscriberId, this.getReqIP(), this.getReqEndpoint());
+                        + " dan subscriberId " + subscriberId, this.getReqIP(),
+                        this.getReqEndpoint() + "#approveSubscriptionReq");
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
@@ -134,7 +136,8 @@ public class SubscriptionServiceImpl implements SubscriptionService {
             if (Boolean.TRUE.equals(APIKey.checkKey(apiKey))) {
                 // Get IP address dll buat log dulu
                 logger.createLog("Menolak subscription request dengan creatorId " + creatorId
-                        + " dan subscriberId " + subscriberId, this.getReqIP(), this.getReqEndpoint());
+                        + " dan subscriberId " + subscriberId, this.getReqIP(),
+                        this.getReqEndpoint() + "#rejectSubscriptionReq");
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
@@ -187,7 +190,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
                         "Mengambil data subscription dengan creatorId " + creatorId + " dan subscriberId "
                                 + subscriberId,
                         this.getReqIP(),
-                        this.getReqEndpoint());
+                        this.getReqEndpoint() + "#checkEndpointRequest");
                 // Baru eksekusi statement
                 Connection conn = DBHandler.getConnection();
                 Statement statement = conn.createStatement();
