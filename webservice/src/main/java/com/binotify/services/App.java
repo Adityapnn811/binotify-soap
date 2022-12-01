@@ -13,16 +13,19 @@ public class App {
 
     public static void main(String[] args) {
         try {
+            Dotenv dotenv = Dotenv.load();
+            App.host = dotenv.get("HOST");
+            App.port = dotenv.get("PORT");
+        } catch (Exception e) {
             App.host = System.getenv("HOST");
             App.port = System.getenv("PORT");
+            System.out.println("No .env file found, using default values");
             if (App.host == null) {
                 App.host = "localhost";
             }
             if (App.port == null) {
                 App.port = "4040";
             }
-        } catch (Exception e) {
-            System.out.println("No .env file found, using default values");
         } finally {
 
             Endpoint.publish(String.format("http://%s:%s/webservice/subscription", host, port),

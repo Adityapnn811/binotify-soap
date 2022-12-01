@@ -13,6 +13,12 @@ public class DBHandler {
 
     private DBHandler() throws SQLException {
         try {
+            Dotenv dotenv = Dotenv.load();
+            DBHandler.DB_URL = dotenv.get("DB_URL");
+            DBHandler.DB_Username = dotenv.get("DB_Username");
+            DBHandler.DB_Password = dotenv.get("DB_Password");
+            System.out.println(DBHandler.DB_URL);
+        } catch (Exception e) {
             DBHandler.DB_URL = System.getenv("DB_URL");
             DBHandler.DB_Username = System.getenv("DB_Username");
             DBHandler.DB_Password = System.getenv("DB_Password");
@@ -25,9 +31,6 @@ public class DBHandler {
             if (DB_Password == null) {
                 DB_Password = "aditya962";
             }
-            System.out.println(DBHandler.DB_URL);
-        } catch (Exception e) {
-            // TODO: handle exception
             System.out.println(DBHandler.DB_URL);
         } finally {
             DBHandler.connection = DriverManager.getConnection(DB_URL, DBHandler.DB_Username, DBHandler.DB_Password);
