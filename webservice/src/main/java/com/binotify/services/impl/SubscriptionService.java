@@ -37,4 +37,8 @@ public interface SubscriptionService {
         @WebMethod(action = "checkEndpointRequest")
         public List<SubscriptionModel> checkEndpointRequest(@WebParam(name = "creatorId") int creatorId,
                         @WebParam(name = "subscriberId") int subscriberId, @WebParam(name = "apiKey") String apiKey);
+
+        @WebMethod(action = "getSubscriptionStatusById")
+        public List<SubscriptionModel> getSubscriptionStatusById(@WebParam(name = "subscriberId") int subscriberId,
+                        @WebParam(name = "apiKey") String apiKey);
 }

@@ -207,6 +207,31 @@ public class SubscriptionServiceImpl implements SubscriptionService {
         }
     }
 
+    // Endpoint buat get status subscription dengan subscriberId
+    @Override
+    public List<SubscriptionModel> getSubscriptionStatusById(int subscriberId, String apiKey) {
+        // Nanti alurnya get API Key dan validasi
+        try {
+            if (Boolean.TRUE.equals(APIKey.checkKey(apiKey))) {
+                // Get IP address dll buat log dulu
+                logger.createLog("Mengambil data subscription untuk subscriberId " + subscriberId, this.getReqIP(),
+                        this.getReqEndpoint() + "#getSubscriptionStatusById");
+                // Baru eksekusi statement
+                Connection conn = DBHandler.getConnection();
+                Statement statement = conn.createStatement();
+                String rawQuery = "SELECT * FROM Subscription WHERE subscriber_id = %d;";
+                String sql = String.format(rawQuery, subscriberId);
+                // Terus lakuin callback
+                return SubscriptionModelDao.getSubscriptionReq(statement.executeQuery(sql));
+            } else {
+                return SubscriptionModelDao.getSubscriptionReq(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return SubscriptionModelDao.getSubscriptionReq(null);
+        }
+    }
+
     public String getReqIP() {
         MessageContext mc = wsContext.getMessageContext();
         HttpExchange req = (HttpExchange) mc.get(JAXWSProperties.HTTP_EXCHANGE);
