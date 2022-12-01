@@ -9,6 +9,9 @@ services:
     volumes:
       - ./sql:/docker-entrypoint-initdb.d
     restart: always
+    networks:
+      static-network:
+        ipv4_address: 172.25.128.2
 
   binotify-soap:
     container_name: binotify-soap2
@@ -16,12 +19,22 @@ services:
       context: ./
       dockerfile: Dockerfile
     environment:
-      - DB_URL=jdbc:mysql://mysql-soap/binotifysoap
+      - DB_URL=jdbc:mysql://172.25.128.2:3306/binotifysoap
       - DB_Username=root
       - DB_Password=root
-      - HOST=localhost
+      - HOST=172.25.128.3
       - PORT=4040
     ports:
       - 4040:4040
     depends_on:
       - mysql
+    networks:
+      static-network:
+        ipv4_address: 172.25.128.3
+networks:
+  static-network:
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+          #docker-compose v3+ do not use ip_range
+          ip_range: 172.28.5.0/24
