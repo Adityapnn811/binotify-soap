@@ -23,8 +23,18 @@ Webservice SOAP menangani pengajuan request subscription, serta menerima approva
 Skema Database dari sistem ini adalah sebagai berikut.
 ![Skema Basis Data](Screenshots/database.jpg)
 
+## Endpoint
+| Endpoints |
+| --- | 
+| "http://%s:%s/webservice/subscription" |
+| "http://%s:%s/webservice/generatekey" |
+
 ## Pembagian Tugas
-- 
+- Security: 13520049
+- Menerima Permintaan Subscription dari Binotify App: 13520096
+- Menerima Penerimaan/Penolakan Permintaan Subscription: 13520049
+- Endpoint Check Status Permintaan: 13520129
+
 
 ## Author
 - 13520049 - Aditya Prawira Nugroho
