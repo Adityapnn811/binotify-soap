@@ -1,7 +1,3 @@
-CREATE DATABASE IF NOT EXISTS binotifysoap;
-
-USE binotifysoap;
-
 CREATE TABLE IF NOT EXISTS Logging (
     id INT AUTO_INCREMENT PRIMARY KEY,
     description varchar(256) NOT NULL,
