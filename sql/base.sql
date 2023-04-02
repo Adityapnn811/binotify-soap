@@ -18,3 +18,14 @@ CREATE TABLE IF NOT EXISTS ApiKeys (
     service_name varchar(256) NOT NULL,
     api_key varchar(256) NOT NULL UNIQUE
 );
+
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (2, 3, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (3, 3, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (4, 3, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (2, 4, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (3, 4, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (4, 4, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (3, 5, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (4, 5, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (2, 2, 'PENDING');
+INSERT INTO Subscription (creator_id, subscriber_id, status) VALUES (4, 2, 'PENDING');
